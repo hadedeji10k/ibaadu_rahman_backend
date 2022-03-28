@@ -1,26 +1,26 @@
 import successResponseHandler from "../helpers/successResponseHandler";
 import errorResponseHandler from "../helpers/errorResponseHandler";
-import galleryService from "../services/galleryService";
+import staffService from "../services/staffService";
 
-const galleryController = {
-  // GET ALL GALLERIES
-  getAllGalleries: async (req, res) => {
+const staffController = {
+  // GET ALL STAFFS
+  getAllStaffs: async (req, res) => {
     try {
-      const galleries = await galleryService.getAllGalleries();
+      const staffs = await staffService.getAllStaffs();
 
-      if (galleries) {
+      if (staffs) {
         return successResponseHandler(
           res,
           201,
-          galleries,
-          "Galleries fetched successfully",
+          staffs,
+          "Staffs fetched successfully",
           true
         );
       } else {
         return errorResponseHandler(
           res,
           400,
-          "Galleries not fetched successfully",
+          "Staffs not fetched successfully",
           false
         );
       }
@@ -29,25 +29,25 @@ const galleryController = {
     }
   },
 
-  // GET ALL GALLERIES BY QUERY (PAGINATION)
-  getAllGalleriesByPage: async (req, res) => {
+  // GET ALL STAFFS BY QUERY (PAGINATION)
+  getAllStaffsByPage: async (req, res) => {
     try {
       const { page } = req.query;
-      const galleries = await galleryService.getAllGalleriesByPage(page);
+      const staffs = await staffService.getAllStaffsByPage(page);
 
-      if (galleries) {
+      if (staffs) {
         return successResponseHandler(
           res,
           201,
-          galleries,
-          "Galleries fetched successfully",
+          staffs,
+          "Staffs fetched successfully",
           true
         );
       } else {
         return errorResponseHandler(
           res,
           400,
-          "Galleries not fetched successfully",
+          "Staffs not fetched successfully",
           false
         );
       }
@@ -56,26 +56,26 @@ const galleryController = {
     }
   },
 
-  // GET A GALLERY BY ID
-  getOneGalleryByID: async (req, res) => {
+  // GET A STAFF BY ID
+  getOneStaffByID: async (req, res) => {
     try {
       const { id } = req.params;
 
-      const gallery = await galleryService.getOneGalleryByID(id);
+      const staff = await staffService.getOneStaffByID(id);
 
-      if (gallery) {
+      if (staff) {
         return successResponseHandler(
           res,
           201,
-          gallery,
-          "Gallery fetched successfully",
+          staff,
+          "Staff fetched successfully",
           true
         );
       } else {
         return errorResponseHandler(
           res,
           400,
-          "Gallery not fetched successfully",
+          "Staff not fetched successfully",
           false
         );
       }
@@ -84,26 +84,26 @@ const galleryController = {
     }
   },
 
-  // ADD A NEW GALLERY
-  addGallery: async (req, res) => {
+  // ADD A NEW STAFF
+  addStaff: async (req, res) => {
     try {
-      const { title, imageUrl } = req.body;
+      const { title, imageUrl, name } = req.body;
 
-      const gallery = await galleryService.addGallery(title, imageUrl);
+      const staff = await staffService.addStaff(title, imageUrl, name);
 
-      if (gallery) {
+      if (staff) {
         return successResponseHandler(
           res,
           201,
-          gallery,
-          "Gallery added successfully",
+          staff,
+          "Staff added successfully",
           true
         );
       } else {
         return errorResponseHandler(
           res,
           400,
-          "Gallery not added successfully",
+          "Staff not added successfully",
           false
         );
       }
@@ -112,26 +112,26 @@ const galleryController = {
     }
   },
 
-  // UPDATE GALLERY
-  updateGallery: async (req, res) => {
+  // UPDATE STAFF
+  updateStaff: async (req, res) => {
     try {
-      const { id, title, imageUrl } = req.body;
+      const { id, title, imageUrl, name } = req.body;
 
-      const gallery = await galleryService.updateGallery(id, title, imageUrl);
+      const staff = await staffService.updateStaff(id, title, imageUrl, name);
 
-      if (gallery) {
+      if (staff) {
         return successResponseHandler(
           res,
           201,
-          gallery,
-          "Gallery updated successfully",
+          staff,
+          "Staff updated successfully",
           true
         );
       } else {
         return errorResponseHandler(
           res,
           400,
-          "Gallery not updated successfully",
+          "Staff not updated successfully",
           false
         );
       }
@@ -140,26 +140,26 @@ const galleryController = {
     }
   },
 
-  // REMOVE A GALLERY
-  deleteGallery: async (req, res) => {
+  // REMOVE A STAFF
+  deleteStaff: async (req, res) => {
     try {
       let { id } = req.params;
 
-      const gallery = await galleryService.deleteGallery(id);
+      const staff = await staffService.deleteStaff(id);
 
-      if (gallery) {
+      if (staff) {
         return successResponseHandler(
           res,
           201,
-          gallery,
-          "Gallery deleted successfully",
+          staff,
+          "Staff deleted successfully",
           true
         );
       } else {
         return errorResponseHandler(
           res,
           400,
-          "Gallery not deleted successfully",
+          "Staff not deleted successfully",
           false
         );
       }
@@ -169,4 +169,4 @@ const galleryController = {
   },
 };
 
-export default galleryController;
+export default staffController;

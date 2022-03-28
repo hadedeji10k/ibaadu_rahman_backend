@@ -13,6 +13,7 @@ import env from "./config/environment/index";
 import authRoutes from "./routes/auth.route";
 import postRoute from "./routes/post.route";
 import galleryRoute from "./routes/gallery.route";
+import staffRoute from "./routes/staff.route";
 
 const app = express();
 
@@ -47,6 +48,7 @@ app.use(
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1", postRoute);
 app.use("/api/v1", galleryRoute);
+app.use("/api/v1", staffRoute);
 
 const startServer = async () => {
   try {
