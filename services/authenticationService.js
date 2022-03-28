@@ -1,17 +1,14 @@
 import bcrypt from "bcryptjs";
 import User from "../models/user";
-// const User = require("../models/user");
 import jwt from "jsonwebtoken";
 import env from "../config/environment/index";
 import validateEmail from "../utils/validateEmail";
 import validateUserName from "../utils/validateUserName";
 import validatePassword from "../utils/validatePassword";
 import emailSender from "../utils/emailSender";
-import accountNumberGenerator from "../utils/emailSender";
 
 const authenticationService = {
   async signUp(email, password, firstName, lastName, userName) {
-
     const isUserTaken = await validateEmail(email);
     if (isUserTaken) {
       return false;
@@ -21,14 +18,10 @@ const authenticationService = {
     if (isUserNameTaken) {
       return false;
     }
-    
+
     const verificationCode = Math.floor(Math.random() * 100000);
 
     const hashedPassword = await bcrypt.hash(password, 10);
-
-    const randomNumber = Math.floor(Math.random() * 100000000);
-
-    const accountNumber = parseInt(`10${randomNumber}`);
 
     const newUser = new User({
       firstName,
@@ -37,7 +30,6 @@ const authenticationService = {
       email,
       role: "user",
       userName,
-      accountNumber,
       password: hashedPassword,
       verificationCode,
     });
@@ -52,12 +44,10 @@ const authenticationService = {
         firstName: newUser.firstName,
         lastName: newUser.lastName,
         name: newUser.name,
-        accountNumber: newUser.accountNumber,
         userName: newUser.userName,
-        accountBalance: newUser.accountBalance
       },
       process.env.JWT_SECRET,
-      { expiresIn: "1h" }
+      { expiresIn: "1day" }
     );
 
     return { token, user: newUser };
@@ -70,9 +60,7 @@ const authenticationService = {
       return false;
     }
 
-    let user = await User.findOne({ email })
-    .populate("transactions")
-    .exec();
+    let user = await User.findOne({ email }).exec();
 
     const token = jwt.sign(
       {
@@ -82,20 +70,16 @@ const authenticationService = {
         firstName: user.firstName,
         lastName: user.lastName,
         name: user.name,
-        accountNumber: user.accountNumber,
         userName: user.userName,
-        accountBalance: user.accountBalance
       },
       env.JWT_SECRET,
-      { expiresIn: "1h" }
+      { expiresIn: "2 days" }
     );
     return { token, user };
   },
 
   async getUserById(userId) {
-    const user = await User.findById(userId)
-    .populate("transactions")
-    .exec();
+    const user = await User.findById(userId).exec();
     const token = jwt.sign(
       {
         userId: user._id,
@@ -104,12 +88,10 @@ const authenticationService = {
         firstName: user.firstName,
         lastName: user.lastName,
         name: user.name,
-        accountNumber: user.accountNumber,
         userName: user.userName,
-        accountBalance: user.accountBalance
       },
       env.JWT_SECRET,
-      { expiresIn: "1h" }
+      { expiresIn: "2 days" }
     );
     return { token, user };
   },
@@ -196,7 +178,7 @@ const authenticationService = {
       return false;
     }
 
-    if(user.isVerified) {
+    if (user.isVerified) {
       return false;
     }
 
@@ -231,7 +213,7 @@ const authenticationService = {
           verificationCode: user.verificationCode,
         },
         env.JWT_SECRET,
-        { expiresIn: "1h" }
+        { expiresIn: "2 days" }
       );
 
       let html = `
@@ -252,13 +234,12 @@ const authenticationService = {
 
       const emailSent = await emailSender(user.email, "Reset Password", html);
 
-      if(emailSent) {
+      if (emailSent) {
         await user.save();
         return { token };
       } else {
         return false;
       }
-
     } catch (error) {
       return false;
     }
@@ -266,7 +247,6 @@ const authenticationService = {
 
   async resetPassword(token, verificationCode, password) {
     try {
-
       const decoded = jwt.verify(token, env.JWT_SECRET);
 
       const user = await User.findById(decoded.userId);

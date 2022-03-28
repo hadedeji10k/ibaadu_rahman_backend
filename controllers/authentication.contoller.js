@@ -24,10 +24,15 @@ const authenticationController = {
           true
         );
       } else {
-        return errorResponseHandler(res, 400, "User email or Username already exists", false);
+        return errorResponseHandler(
+          res,
+          400,
+          "User email or Username already exists",
+          false
+        );
       }
     } catch (error) {
-      errorResponseHandler(res, 500, "Request Not Processed", false);
+      return errorResponseHandler(res, 500, "Request Not Processed", false);
     }
   },
 
@@ -257,7 +262,12 @@ const authenticationController = {
           true
         );
       } else {
-        return errorResponseHandler(res, 400, "User not found or User already verified", false);
+        return errorResponseHandler(
+          res,
+          400,
+          "User not found or User already verified",
+          false
+        );
       }
     } catch (error) {
       return errorResponseHandler(res, 500, "Request Not Processed", false);
@@ -277,7 +287,12 @@ const authenticationController = {
           true
         );
       } else {
-        return errorResponseHandler(res, 400, "Invalid email or Email not sent", false);
+        return errorResponseHandler(
+          res,
+          400,
+          "Invalid email or Email not sent",
+          false
+        );
       }
     } catch (error) {
       return errorResponseHandler(res, 500, "Request Not Processed", false);
@@ -287,7 +302,11 @@ const authenticationController = {
   resetPassword: async (req, res) => {
     const { password, verificationCode, token } = req.body;
     try {
-      const user = await authService.resetPassword(token, verificationCode, password);
+      const user = await authService.resetPassword(
+        token,
+        verificationCode,
+        password
+      );
 
       if (user) {
         return successResponseHandler(
