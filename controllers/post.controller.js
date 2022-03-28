@@ -12,7 +12,7 @@ const postController = {
         return successResponseHandler(
           res,
           201,
-          user,
+          posts,
           "Posts fetched successfully",
           true
         );
@@ -115,12 +115,11 @@ const postController = {
   // ADD A NEW POST
   addPost: async (req, res) => {
     try {
-      const { title, imageUrl, category, description, content } = req.body;
+      const { title, imageUrl, description, content } = req.body;
 
       const post = await postService.addPost(
         title,
         imageUrl,
-        category,
         description,
         content
       );

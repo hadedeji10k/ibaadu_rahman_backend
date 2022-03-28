@@ -1,6 +1,6 @@
 const { Schema, model } = require("mongoose");
 
-const PostSchema = new Schema(
+const GallerySchema = new Schema(
   {
     title: {
       type: String,
@@ -11,14 +11,6 @@ const PostSchema = new Schema(
       required: true,
       unique: true,
     },
-    description: {
-      type: String,
-      required: true,
-    },
-    content: {
-      type: String,
-      required: true,
-    },
     imageUrl: {
       type: String,
       required: true,
@@ -27,4 +19,4 @@ const PostSchema = new Schema(
   { timestamps: true }
 );
 
-module.exports = model("Post", PostSchema);
+module.exports = model("Gallery", GallerySchema);
