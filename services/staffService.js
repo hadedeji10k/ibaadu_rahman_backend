@@ -15,7 +15,8 @@ const staffService = {
   // GET ALL STAFFS BY QUERY (PAGINATION)
   async getAllStaffsByPage(postPage) {
     let page = parseInt(postPage);
-    let limit = parseInt(process.env.LIMIT);
+    // let limit = parseInt(process.env.LIMIT);
+    let limit = 10;
     let startIndex = (Number(page) - 1) * limit;
 
     const totalCountOfPosts = await Staff.countDocuments({});
@@ -30,7 +31,7 @@ const staffService = {
     const numberOfPages = Math.ceil(totalCountOfPosts / limit);
 
     return {
-      data: staffs,
+      staffs,
       totalCountOfPosts,
       numberOfPages,
       currentPage: page,

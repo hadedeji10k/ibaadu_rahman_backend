@@ -15,7 +15,8 @@ const postService = {
   // GET POST BY QUERY (PAGINATION)
   async getAllPostsByPage(postPage) {
     let page = parseInt(postPage);
-    let limit = parseInt(process.env.LIMIT);
+    // let limit = parseInt(process.env.LIMIT);
+    let limit = 10;
     let startIndex = (Number(page) - 1) * limit;
 
     const totalCountOfPosts = await Post.countDocuments({});
@@ -60,7 +61,7 @@ const postService = {
   },
 
   // ADD A NEW POST
-  async addPost(title, imageUrl, category, description, content) {
+  async addPost(title, imageUrl, description, content) {
     let slug = title.replace(/\s+/g, "-").toLowerCase();
 
     const postExist = async (slug) => {

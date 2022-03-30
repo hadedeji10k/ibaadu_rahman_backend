@@ -15,7 +15,8 @@ const galleryService = {
   // GET ALL GALLERIES BY QUERY (PAGINATION)
   async getAllGalleriesByPage(postPage) {
     let page = parseInt(postPage);
-    let limit = parseInt(process.env.LIMIT);
+    // let limit = parseInt(process.env.LIMIT);
+    let limit = 10;
     let startIndex = (Number(page) - 1) * limit;
 
     const totalCountOfPosts = await Gallery.countDocuments({});

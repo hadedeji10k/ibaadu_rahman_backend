@@ -4,7 +4,6 @@ import env from "../config/environment/index";
 const emailSender = async (email, subject, html) => {
   try {
     return new Promise((resolve, reject) => {
-
       let mailOptions = {
         from: env.MAIL.email,
         to: email,

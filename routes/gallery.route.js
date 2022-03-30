@@ -7,10 +7,10 @@ router.get(
   "/get-all-galleries-by-page",
   galleryController.getAllGalleriesByPage
 );
-router.get("/get-gallery", galleryController.getOneGalleryByID);
+router.get("/get-gallery/:id", galleryController.getOneGalleryByID);
 
 router.post("/add-gallery", galleryController.addGallery);
 router.put("/update-gallery", galleryController.updateGallery);
-router.delete("/delete-gallery", galleryController.deleteGallery);
+router.delete("/delete-gallery/:id", galleryController.deleteGallery);
 
 export default router;
