@@ -29,6 +29,32 @@ const galleryController = {
     }
   },
 
+  getNumberOfGalleries: async (req, res) => {
+    try {
+      const numberOfGalleries = await galleryService.getNumberOfGalleries();
+
+      if (numberOfGalleries) {
+        return successResponseHandler(
+          res,
+          201,
+          numberOfGalleries,
+          "Total number of Galleries fetched successfully",
+          true
+        );
+      } else {
+        return errorResponseHandler(
+          res,
+          400,
+          "Total number of Galleries not fetched successfully",
+          false
+        );
+      }
+    } catch (error) {
+      return errorResponseHandler(res, 500, "Request Not Processed", false);
+    }
+  },
+
+
   // GET ALL GALLERIES BY QUERY (PAGINATION)
   getAllGalleriesByPage: async (req, res) => {
     try {

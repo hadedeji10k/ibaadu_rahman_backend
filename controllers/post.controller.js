@@ -37,7 +37,7 @@ const postController = {
         return successResponseHandler(
           res,
           201,
-          count: numberOfPosts,
+          numberOfPosts,
           "Total number of Posts fetched successfully",
           true
         );

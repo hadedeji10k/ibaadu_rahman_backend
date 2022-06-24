@@ -12,6 +12,12 @@ const staffService = {
     return staffs;
   },
 
+  
+  async getNumberOfStaffs() {
+    const totalCountOfStaffs = await Staff.countDocuments({});
+    return totalCountOfStaffs
+  },
+
   // GET ALL STAFFS BY QUERY (PAGINATION)
   async getAllStaffsByPage(postPage) {
     let page = parseInt(postPage);

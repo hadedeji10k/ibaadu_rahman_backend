@@ -8,6 +8,7 @@ router.get(
   galleryController.getAllGalleriesByPage
 );
 router.get("/get-gallery/:id", galleryController.getOneGalleryByID);
+router.get("/get-total-count-galleries", galleryController.getNumberOfGalleries);
 
 router.post("/add-gallery", galleryController.addGallery);
 router.put("/update-gallery", galleryController.updateGallery);

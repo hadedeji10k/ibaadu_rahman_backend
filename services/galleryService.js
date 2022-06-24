@@ -12,6 +12,12 @@ const galleryService = {
     return galleries;
   },
 
+  async getNumberOfGalleries() {
+    const totalCountOfGalleries = await Gallery.countDocuments({});
+    return totalCountOfGalleries
+  },
+
+
   // GET ALL GALLERIES BY QUERY (PAGINATION)
   async getAllGalleriesByPage(postPage) {
     let page = parseInt(postPage);

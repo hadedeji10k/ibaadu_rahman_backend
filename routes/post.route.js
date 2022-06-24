@@ -6,6 +6,7 @@ router.get("/get-all-posts", postController.getAllPosts);
 router.get("/get-all-posts-by-page", postController.getAllPostsByPage);
 router.get("/get-post-by-slug", postController.getOnePostBySlug);
 router.get("/get-post/:id", postController.getOnePostByID);
+router.get("/get-total-count-posts", postController.getNumberOfPosts);
 
 router.post("/add-post", postController.addPost);
 router.put("/update-post", postController.updatePost);

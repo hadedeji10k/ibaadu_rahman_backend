@@ -29,6 +29,31 @@ const staffController = {
     }
   },
 
+  getNumberOfStaffs: async (req, res) => {
+    try {
+      const numberOfStaffs = await staffService.getNumberOfStaffs();
+
+      if (numberOfStaffs) {
+        return successResponseHandler(
+          res,
+          201,
+          numberOfStaffs,
+          "Total number of Staffs fetched successfully",
+          true
+        );
+      } else {
+        return errorResponseHandler(
+          res,
+          400,
+          "Total number of Staffs not fetched successfully",
+          false
+        );
+      }
+    } catch (error) {
+      return errorResponseHandler(res, 500, "Request Not Processed", false);
+    }
+  },
+
   // GET ALL STAFFS BY QUERY (PAGINATION)
   getAllStaffsByPage: async (req, res) => {
     try {
