@@ -61,7 +61,7 @@ const postService = {
   },
 
   // ADD A NEW POST
-  async addPost(title, imageUrl, content) {
+  async addPost(title, description, imageUrl, content) {
     let slug = title.replace(/\s+/g, "-").toLowerCase();
 
     const postExist = async (slug) => {
@@ -76,8 +76,6 @@ const postService = {
     if (await postExist(slug)) {
       return false;
     }
-    
-    const description = content.slice(0,100);
 
     const newPost = new Post({
       title,
@@ -93,7 +91,7 @@ const postService = {
   },
 
   //   UPDATE POST
-  async updatePost(id, title, content, imageUrl) {
+  async updatePost(id, title, description, content, imageUrl) {
     const post = await Post.findById(id);
 
     if (!post) {
@@ -107,8 +105,11 @@ const postService = {
       await post.save();
     }
     if (content) {
-      post.content = content;
-      post.description = content.slice(0,100);      
+      post.content = content;     
+      await post.save();
+    }
+    if (description) {
+      post.description = description;
       await post.save();
     }
     if (imageUrl) {
