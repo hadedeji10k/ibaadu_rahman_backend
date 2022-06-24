@@ -11,6 +11,11 @@ const postService = {
 
     return posts;
   },
+  
+  async getNumberOfPosts() {
+    const totalCountOfPosts = await Post.countDocuments({});
+    return totalCountOfPosts
+  },
 
   // GET POST BY QUERY (PAGINATION)
   async getAllPostsByPage(postPage) {
