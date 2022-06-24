@@ -28,6 +28,31 @@ const postController = {
       return errorResponseHandler(res, 500, "Request Not Processed", false);
     }
   },
+  
+  getNumberOfPosts: async (req, res) => {
+    try {
+      const numberOfPosts = await postService.getNumberOfPosts();
+
+      if (numberOfPosts) {
+        return successResponseHandler(
+          res,
+          201,
+          count: numberOfPosts,
+          "Total number of Posts fetched successfully",
+          true
+        );
+      } else {
+        return errorResponseHandler(
+          res,
+          400,
+          "Total number of Posts not fetched successfully",
+          false
+        );
+      }
+    } catch (error) {
+      return errorResponseHandler(res, 500, "Request Not Processed", false);
+    }
+  },
 
   // GET POST BY QUERY (PAGINATION)
   getAllPostsByPage: async (req, res) => {
