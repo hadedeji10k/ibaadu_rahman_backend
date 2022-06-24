@@ -115,12 +115,11 @@ const postController = {
   // ADD A NEW POST
   addPost: async (req, res) => {
     try {
-      const { title, imageUrl, description, content } = req.body;
+      const { title, imageUrl, content } = req.body;
 
       const post = await postService.addPost(
         title,
         imageUrl,
-        description,
         content
       );
 
@@ -148,12 +147,11 @@ const postController = {
   // UPDATE POST
   updatePost: async (req, res) => {
     try {
-      const { id, title, description, content, imageUrl } = req.body;
+      const { id, title, content, imageUrl } = req.body;
 
       const post = await postService.updatePost(
         id,
         title,
-        description,
         content,
         imageUrl
       );
