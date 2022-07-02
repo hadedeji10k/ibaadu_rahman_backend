@@ -4,6 +4,7 @@ dotenv.config();
 import cors from "cors";
 import express from "express";
 import passport from "passport";
+import ImageKit from "imagekit";
 
 import pkg from "mongoose";
 const { connect } = pkg;
@@ -71,6 +72,17 @@ const startServer = async () => {
 app.get("/", (req, res) => {
   console.log("This is the home route");
   res.send("Welcome to the Home route of IBAADU RAHMAN BACKEND API");
+});
+
+app.get("/imagekit/auth", (req, res) => {
+  const imagekit = new ImageKit({
+    publicKey: env.IMAGE_KIT_PUBLIC_KEY,
+    privateKey: env.IMAGE_KIT_PUBLIC_KEY,
+    urlEndpoint: env.IMAGE_KIT_URL_ENDPOINT,
+  });
+
+  const authenticationParameters = imagekit.getAuthenticationParameters();
+  res.send(authenticationParameters);
 });
 
 startServer();
