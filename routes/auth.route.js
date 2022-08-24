@@ -26,4 +26,7 @@ router.post(
 router.post("/update-user-role", authenticationController.updateUserRole);
 router.delete("/users/:id", authenticationController.deleteUser);
 
+// Admin dashboard
+router.get("/admin-dashboard", authenticationController.adminDashboard);
+
 export default router;

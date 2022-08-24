@@ -60,20 +60,30 @@ const authenticationService = {
       return false;
     }
 
-    let user = await User.findOne({ email }).exec();
+    const userAuth = await User.findOne({ email }).exec();
+
+    const user = {
+      id: userAuth._id,
+      role: userAuth.role,
+      email: userAuth.email,
+      firstName: userAuth.firstName,
+      lastName: userAuth.lastName,
+      name: userAuth.name,
+      userName: userAuth.userName,
+    };
 
     const token = jwt.sign(
       {
-        userId: user._id,
-        role: user.role,
-        email: user.email,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        name: user.name,
-        userName: user.userName,
+        userId: userAuth._id,
+        role: userAuth.role,
+        email: userAuth.email,
+        firstName: userAuth.firstName,
+        lastName: userAuth.lastName,
+        name: userAuth.name,
+        userName: userAuth.userName,
       },
       env.JWT_SECRET,
-      { expiresIn: "2 days" }
+      { expiresIn: "1 year" }
     );
     return { token, user };
   },

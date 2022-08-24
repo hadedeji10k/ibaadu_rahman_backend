@@ -1,6 +1,9 @@
 import successResponseHandler from "../helpers/successResponseHandler";
 import errorResponseHandler from "../helpers/errorResponseHandler";
 import authService from "../services/authenticationService";
+import galleryService from "../services/galleryService";
+import postService from "../services/postService";
+import staffService from "../services/staffService";
 
 const authenticationController = {
   signUp: async (req, res) => {
@@ -347,6 +350,37 @@ const authenticationController = {
           res,
           400,
           "User not found or password not updated successfully",
+          false
+        );
+      }
+    } catch (error) {
+      return errorResponseHandler(res, 500, "Request Not Processed", false);
+    }
+  },
+
+  adminDashboard: async (req, res, next) => {
+    try {
+      const numberOfGalleries = await galleryService.getNumberOfGalleries();
+      const numberOfPosts = await postService.getNumberOfPosts();
+      const numberOfStaffs = await staffService.getNumberOfStaffs();
+
+      if (numberOfGalleries && numberOfStaffs && numberOfPosts) {
+        return successResponseHandler(
+          res,
+          201,
+          {
+            numberOfGalleries,
+            numberOfPosts,
+            numberOfStaffs,
+          },
+          "Admin Dashboard fetched successfully",
+          true
+        );
+      } else {
+        return errorResponseHandler(
+          res,
+          400,
+          "Admin Dashboard not fetched successfully",
           false
         );
       }
