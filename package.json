@@ -1,9 +1,8 @@
 {
-  "name": "Ibadu Rahman",
+  "name": "ibadu_rahman",
   "version": "1.0.0",
   "description": "A school website API",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "start": "nodemon -r esm index.js",
     "test": "src"
